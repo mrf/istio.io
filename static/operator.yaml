@@ -203,7 +203,11 @@ spec:
       serviceAccountName: istio-operator
       containers:
         - name: istio-operator
+<<<<<<< HEAD
           image: gcr.io/istio-testing/operator:1.6-dev
+=======
+          image: gcr.io/istio-testing/operator:1.5-dev
+>>>>>>> v1.5
           command:
           - operator
           - server
