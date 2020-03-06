@@ -56,13 +56,13 @@ for rel in "${TOBUILD[@]}"; do
   echo "### Building '${NAME}' from ${TAG} for ${URL}"
   git checkout "${TAG}"
 
-  if [[ "${TAG}" == "release-1.2" || "${TAG}" == "release-1.3" || "${TAG}" == "release-1.4" ]]; then
+  if [[ "${TAG}" == "release-1.2" || "${TAG}" == "release-1.3" ]]; then
     scripts/build_site.sh
   fi
 
   scripts/gen_site.sh "${URL}"
 
-  if [[ "${TAG}" != "release-0.8" && "${TAG}" != "release-1.0" && "${TAG}" != "release-1.1" && "${TAG}" != "release-1.2" && "${TAG}" != "release-1.3" && "${TAG}" != "release-1.4" ]]; then
+  if [[ "${TAG}" != "release-0.8" && "${TAG}" != "release-1.0" && "${TAG}" != "release-1.1" && "${TAG}" != "release-1.2" && "${TAG}" != "release-1.3" ]]; then
     scripts/build_site.sh
   fi
 
