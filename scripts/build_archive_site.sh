@@ -62,7 +62,7 @@ for rel in "${TOBUILD[@]}"; do
 
   scripts/gen_site.sh "${URL}"
 
-  if [[ "${TAG}" != "release-0.8" && "${TAG}" != "release-1.0" && "${TAG}" != "release-1.1" && "${TAG}" != "release-1.2" && "${TAG}" != "release-1.3" && "${TAG}" == "release-1.4" ]]; then
+  if [[ "${TAG}" != "release-0.8" && "${TAG}" != "release-1.0" && "${TAG}" != "release-1.1" && "${TAG}" != "release-1.2" && "${TAG}" != "release-1.3" && "${TAG}" != "release-1.4" ]]; then
     scripts/build_site.sh
   fi
 
