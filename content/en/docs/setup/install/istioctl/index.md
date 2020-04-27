@@ -51,7 +51,7 @@ $ istioctl manifest apply --set addonComponents.grafana.enabled=true
 {{< /text >}}
 
 In general, you can use the `--set` flag in `istioctl` as you would with
-[Helm](/docs/setup/install/helm/). The only difference is you must
+Helm. The only difference is you must
 prefix the setting paths with `values.` because this is the path to the Helm pass-through API in the
 [`IstioOperator` API](/docs/reference/config/istio.operator.v1alpha1/).
 
@@ -59,12 +59,12 @@ prefix the setting paths with `values.` because this is the path to the Helm pas
 
 By default, `istioctl` uses compiled-in charts to generate the install manifest. These charts are released together with
 `istioctl` for auditing and customization purposes and can be found in the release tar in the
-`install/kubernetes/operator/charts` directory.
+`manifests` directory.
 `istioctl` can also use external charts rather than the compiled-in ones. To select external charts, set
 `installPackagePath` to a local file system path:
 
 {{< text bash >}}
-$ istioctl manifest apply --set installPackagePath=< base directory where installed >/istio-releases/istio-{{< istio_full_version >}}/install/kubernetes/operator/charts
+$ istioctl manifest apply --set installPackagePath=< full path to base directory where downloaded >/manifests
 {{< /text >}}
 
 If using the `istioctl` {{< istio_full_version >}} binary, this command will result in the same installation as `istioctl manifest apply` alone, because it points to the
@@ -90,12 +90,12 @@ accessible to `istioctl` by using this command:
 {{< text bash >}}
 $ istioctl profile list
 Istio configuration profiles:
+    minimal
+    preview
     remote
-    separate
     default
     demo
     empty
-    minimal
 {{< /text >}}
 
 ## Display the configuration of a profile
@@ -207,7 +207,7 @@ customized install using these commands:
 {{< text bash >}}
 $ istioctl manifest generate > 1.yaml
 $ istioctl manifest generate -f samples/operator/pilot-k8s.yaml > 2.yaml
-$ istioctl manifest diff 1.yam1 2.yaml
+$ istioctl manifest diff 1.yaml 2.yaml
 Differences of manifests are:
 
 Object Deployment:istio-system:istio-pilot has diffs:
@@ -274,7 +274,7 @@ $ istioctl manifest apply -f samples/operator/pilot-k8s.yaml
 {{< /text >}}
 
 {{< tip >}}
-For backwards compatibility, the previous [Helm installation options](/docs/reference/config/installation-options/), with the exception of Kubernetes resource settings,
+For backwards compatibility, the previous [Helm installation options](https://archive.istio.io/v1.4/docs/reference/config/installation-options/), with the exception of Kubernetes resource settings,
 are also fully supported. To set them on the command line, prepend the option name with "`values.`".
 For example, the following command overrides the `pilot.traceSampling` Helm configuration option:
 
@@ -505,7 +505,7 @@ $ istioctl manifest apply -f samples/operator/pilot-k8s.yaml
 
 ### Customize Istio settings using the Helm API
 
-The `IstioOperator` API includes a pass-through interface to the [Helm API](/docs/reference/config/installation-options/)
+The `IstioOperator` API includes a pass-through interface to the [Helm API](https://archive.istio.io/v1.4/docs/reference/config/installation-options/)
 using the `values` field.
 
 The following YAML file configures global and Pilot settings through the Helm API:
@@ -531,4 +531,11 @@ To uninstall Istio, run the following command:
 
 {{< text bash >}}
 $ istioctl manifest generate <your original installation options> | kubectl delete -f -
+{{< /text >}}
+
+The control plane namespace (e.g., `istio-system`) is not removed by default.
+If no longer needed, use the following command to remove it:
+
+{{< text bash >}}
+$ kubectl delete namespace istio-system
 {{< /text >}}

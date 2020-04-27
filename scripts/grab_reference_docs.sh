@@ -33,6 +33,7 @@ fi
 REPOS=(
     https://github.com/istio/istio.git@"${SOURCE_BRANCH_NAME}"
     https://github.com/istio/api.git@"${SOURCE_BRANCH_NAME}"
+    https://github.com/istio/proxy.git@"${SOURCE_BRANCH_NAME}"
     https://github.com/apigee/istio-mixer-adapter.git@master
     https://github.com/osswangxining/alicloud-istio-grpcadapter.git@master
     https://github.com/vmware/wavefront-adapter-for-istio.git@master
@@ -49,7 +50,6 @@ COMPONENTS=(
     https://github.com/istio/istio.git@"${SOURCE_BRANCH_NAME}"@pilot/cmd/pilot-agent@pilot-agent
     https://github.com/istio/istio.git@"${SOURCE_BRANCH_NAME}"@pilot/cmd/pilot-discovery@pilot-discovery
     https://github.com/istio/istio.git@"${SOURCE_BRANCH_NAME}"@security/cmd/node_agent@node_agent
-    https://github.com/istio/istio.git@"${SOURCE_BRANCH_NAME}"@galley/cmd/galley@galley
     https://github.com/istio/istio.git@"${SOURCE_BRANCH_NAME}"@operator/cmd/operator@operator
 )
 
@@ -90,7 +90,7 @@ locate_file() {
 
     LEN=${#WORK_DIR}
 
-    if [[ "${REPO_URL}" != "https://github.com/istio/istio.git" && "${REPO_URL}" != "https://github.com/istio/api.git" && "${REPO_URL}" != "https://github.com/istio/operator.git" ]]; then
+    if [[ "${REPO_URL}" != "https://github.com/istio/istio.git" && "${REPO_URL}" != "https://github.com/istio/api.git" && "${REPO_URL}" != "https://github.com/istio/operator.git" && "${REPO_URL}" != "https://github.com/istio/proxy.git" ]]; then
         sed -i -e 's/layout: protoc-gen-docs/layout: partner-component/g' "${ROOTDIR}/content/en/docs${PP}/${FN}/index.html"
     fi
 

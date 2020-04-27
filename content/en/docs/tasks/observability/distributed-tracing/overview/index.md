@@ -13,7 +13,7 @@ This allows a deeper understanding about request latency, serialization and para
 Istio leverages [Envoy's distributed tracing](https://www.envoyproxy.io/docs/envoy/v1.12.0/intro/arch_overview/observability/tracing) feature
 to provide tracing integration out of the box. Specifically, Istio provides options to install various tracing backend
 and configure proxies to send trace spans to them automatically.
-See [Zipkin](../zipkin/), [Jaeger](../jaeger/) and [LightStep](/docs/tasks/observability/distributed-tracing/lightstep/) task docs about how Istio works with those tracing systems.
+See [Zipkin](../zipkin/), [Jaeger](../jaeger/) and [Lightstep](/docs/tasks/observability/distributed-tracing/lightstep/) task docs about how Istio works with those tracing systems.
 
 ## Trace context propagation
 
@@ -89,33 +89,3 @@ public Response bookReviewsById(@PathParam("productId") int productId,
 {{< /text >}}
 
 When you make downstream calls in your applications, make sure to include these headers.
-
-## Trace sampling
-
-Istio captures a trace for all requests by default when installing with the demo profile.
-For example, when using the Bookinfo sample application above, every time you access
-`/productpage` you see a corresponding trace in the
-dashboard. This sampling rate is suitable for a test or low traffic
-mesh. For a high traffic mesh you can lower the trace sampling
-percentage in one of two ways:
-
-* During the mesh setup, use the option `values.pilot.traceSampling` to
-  set the percentage of trace sampling. See the
-  [Installing with {{< istioctl >}}](/docs/setup/install/istioctl/) documentation for
-  details on setting options.
-* In a running mesh, edit the `istio-pilot` deployment and
-  change the environment variable with the following steps:
-
-    1. To open your text editor with the deployment configuration file
-       loaded, run the following command:
-
-        {{< text bash >}}
-        $ kubectl -n istio-system edit deploy istio-pilot
-        {{< /text >}}
-
-    1. Find the `PILOT_TRACE_SAMPLING` environment variable, and change
-       the `value:` to your desired percentage.
-
-In both cases, valid values are from 0.0 to 100.0 with a precision of 0.01.
-
-
